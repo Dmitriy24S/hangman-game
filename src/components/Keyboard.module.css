@@ -1,0 +1,31 @@
+.btn {
+  width: 3.125rem; /* 50px; */
+  aspect-ratio: 1 / 1;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+}
+
+.btn:disabled {
+  border-color: transparent;
+  cursor: default;
+  /* color: inherit; */ /* ! makes text color black */
+}
+
+.active {
+  background-color: rgb(94, 94, 231);
+  color: white;
+  cursor: default;
+}
+
+.wrong {
+  opacity: 0.8;
+  color: rgb(236, 24, 24);
+  cursor: default;
+}
+
+/* .active:hover, */
+/* .wrong:hover { */
+/* border-color: transparent; */
+/* } */
