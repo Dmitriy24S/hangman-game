@@ -4,7 +4,7 @@
   align-items: center;
   padding: 1rem;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 65px;
+  right: -1rem;
   /* #root padding gives corner spacing */
 }

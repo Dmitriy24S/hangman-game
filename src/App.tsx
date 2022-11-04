@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useState } from 'react'
 import './App.css'
+import GameResult from './components/GameResult'
 import HangmanDrawing from './components/HangmanDrawing'
 import HangmanWord from './components/HangmanWord'
 import Keyboard from './components/Keyboard'
@@ -34,7 +35,13 @@ function App() {
   const isWinner = wordToGuess.split('').every((letter) => guessedLetters.includes(letter))
   console.log('isWinner', isWinner)
 
-  // const [darkTheme, setDarkTheme] = useState('true')
+  // New Game
+  const resetGame = () => {
+    setGuessedLetters([])
+    setWordToGuess(getRandomWord())
+  }
+
+  // Theme
   const [darkTheme, setDarkTheme] = useState(localStorage.getItem('theme') || 'false')
   console.log('darkTheme', darkTheme)
 
@@ -51,7 +58,7 @@ function App() {
     }
   }
 
-  // Apple app/website theme (light/dark theme)
+  // Theme - Apple app/website theme (light/dark theme)
   const applyTheme = () => {
     // check system preference:
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -68,13 +75,13 @@ function App() {
     }
   }
 
-  // Set app/page theme on page load (paints the app before it renders elements)
+  // Theme - Set app/page theme on page load (paints the app before it renders elements)
   useLayoutEffect(() => {
     console.log('LAYOUT EFFECT')
     applyTheme()
   }, [])
 
-  // Toggle theme on theme state change (toggle button)
+  // Theme - Toggle theme on theme state change (toggle button)
   useEffect(() => {
     // if currently on dark theme -> switch to light theme
     if (darkTheme === 'true') {
@@ -98,6 +105,8 @@ function App() {
       </div>
 
       <ThemeToggle darkTheme={darkTheme} handleToggleTheme={handleToggleTheme} />
+
+      <GameResult isLost={isLost} isWinner={isWinner} resetGame={resetGame} />
 
       <div className='game'>
         <HangmanDrawing incorrectLettersAmount={incorrectLetters.length} />

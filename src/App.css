@@ -54,3 +54,189 @@
   gap: 2rem;
   width: 100%;
 }
+
+/* Game result & new game button */
+.game-result {
+  /* height: 6rem; */
+  height: 10rem;
+  /* prevent content jump when show game result message */
+}
+
+.game-result p {
+  margin: 0 auto;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+/* Game results buttons */
+.game-result__btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Version one - gradient border rotate */
+.version--one {
+}
+
+.game-result__btn--border {
+  position: relative;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+
+  animation: float 2.5s ease-in-out infinite; /* zooms in out / float */
+  margin: 0 auto;
+
+  /* overflow: hidden; */
+  /* z-index: 1; */
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  /* border-radius: 8px; */
+}
+
+.game-result__btn--border:before {
+  --borderWidth: 3px;
+  --angle: 0deg;
+
+  content: '';
+  position: absolute;
+  z-index: -1;
+
+  top: calc(-1 * var(--borderWidth));
+  left: calc(-1 * var(--borderWidth));
+  height: calc(100% + var(--borderWidth) * 2);
+  width: calc(100% + var(--borderWidth) * 2);
+
+  /* border-radius: calc(2 * var(--borderWidth)); */
+  border-radius: calc(4 * var(--borderWidth));
+
+  background: linear-gradient(
+    var(--angle),
+    #ffb218,
+    #f8502f,
+    #ef4e7b,
+    #a166ab,
+    #5073b8,
+    #1098ad,
+    #07b39b,
+    #6fba82
+  );
+
+  /* background: linear-gradient(90deg, red, blue); */
+
+  /* background: linear-gradient(var(--angle), red, blue); */
+
+  /* ! not smooth rotation? */
+  animation: 7s rotate linear infinite;
+  /* background-size: 300% 300%; */
+  /* background-size: 100% 800%; */
+  background-size: 100% 17rem;
+  /* ! stretches out for smoother color transition? */
+}
+
+/* Version two - right to left color swipe */
+.game-result .version--two {
+  position: relative;
+  color: white;
+  animation: float 2.5s ease-in-out infinite; /* zooms in out / float */
+}
+
+.game-result .version--two:before {
+  --borderWidth: 3px;
+  --angle: 0deg;
+
+  content: '';
+  position: absolute;
+  z-index: -1;
+
+  top: calc(-1 * var(--borderWidth));
+  left: calc(-1 * var(--borderWidth));
+  height: calc(100% + var(--borderWidth) * 2);
+  width: calc(100% + var(--borderWidth) * 2);
+
+  /* border-radius: calc(2 * var(--borderWidth)); */
+  border-radius: calc(4 * var(--borderWidth));
+
+  background: linear-gradient(
+    60deg,
+    #ffb218,
+    #f8502f,
+    #ef4e7b,
+    #a166ab,
+    #5073b8,
+    #1098ad,
+    #07b39b,
+    #6fba82,
+    #ffb218,
+    #f8502f,
+    #ef4e7b,
+    #a166ab,
+    #5073b8,
+    #1098ad,
+    #07b39b /* specific amount of color loop to avoid color jump on loop? */
+  );
+
+  /* animation: 10s bg-move linear infinite; */
+  animation: 4s bg-move linear infinite;
+  /* animation: 10s rotate linear infinite; */
+
+  background-size: 300% 300%;
+  /* ! stretches out for smoother color transition? */
+}
+
+/* Hover */
+.game-result button:hover {
+  border-color: transparent;
+  /* border: none; */
+}
+
+.game-result button:focus-visible {
+  outline-offset: 4px;
+}
+
+/* zoom in out / float */
+@keyframes float {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* right to left swipe color */
+@keyframes bg-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@keyframes rotate2 {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+/* ! ? */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
