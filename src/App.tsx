@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import './App.css'
 import GameResult from './components/GameResult'
 import HangmanDrawing from './components/HangmanDrawing'
@@ -23,11 +23,20 @@ function App() {
   // guessedLetters:  (2) ['e', 'd']
   // incorrectLetters:  ['d']
 
-  const addGuessedLetter = (letter: string) => {
-    //  if already used this letter, won game, lost game - return
-    if (guessedLetters.includes(letter) || isWinner || isLost) return
-    setGuessedLetters((currentLetters) => [...currentLetters, letter])
-  }
+  // const addGuessedLetter = (letter: string) => {
+  //   if (guessedLetters.includes(letter) || isWinner || isLost) return
+  //   setGuessedLetters((currentLetters) => [...currentLetters, letter])
+  // }
+
+  // (prevent unnececasry reruns? + useEffect key press. Rerun function only when changes to guessedLetters)
+  const memoizedSetGuessedLetters = useCallback(
+    (letter: string) => {
+      //  if already used this letter, won game, lost game - return
+      if (guessedLetters.includes(letter) || isWinner || isLost) return
+      setGuessedLetters((currentLetters) => [...currentLetters, letter])
+    },
+    [guessedLetters]
+  )
 
   const isLost = incorrectLetters.length >= 6
   console.log('isLost', isLost)
@@ -97,14 +106,34 @@ function App() {
     }
   }, [darkTheme])
 
+  // Listen for keyboard presses
+  useEffect(() => {
+    const keyPress = (e: KeyboardEvent) => {
+      const key = e.key
+      const regex = /^[A-Za-z]$/
+      if (!key.match(regex)) return
+
+      console.log(e.key, 'e.key')
+      memoizedSetGuessedLetters(e.key.toLowerCase())
+
+      // if (regex.test(e.key)) - validate key press - (returns a Boolean value that indicates whether or not a pattern exists in a searched string)
+    }
+
+    window.addEventListener('keydown', keyPress)
+
+    return () => {
+      window.removeEventListener('keydown', keyPress)
+    }
+    // }, [])
+  }, [guessedLetters])
+  // (prevent unnececasry runs? + useEffect key press. Rerun function only when changes to guessedLetters)
+
   return (
     <div className='App'>
       <div>
         <h1 className='title'>Hangman Game</h1>
         <span className='note'>Vite + React</span>
       </div>
-
-      <ThemeToggle darkTheme={darkTheme} handleToggleTheme={handleToggleTheme} />
 
       <GameResult isLost={isLost} isWinner={isWinner} resetGame={resetGame} />
 
@@ -116,12 +145,14 @@ function App() {
           reveal={isLost}
         />
         <Keyboard
-          addGuessedLetter={addGuessedLetter}
+          // addGuessedLetter={addGuessedLetter}
+          addGuessedLetter={memoizedSetGuessedLetters}
           guessedLetters={guessedLetters}
           incorrectLetters={incorrectLetters}
           disabled={isLost || isWinner}
         />
       </div>
+      <ThemeToggle darkTheme={darkTheme} handleToggleTheme={handleToggleTheme} />
     </div>
   )
 }
