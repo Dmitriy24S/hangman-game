@@ -10,10 +10,14 @@
 .btn:disabled {
   border-color: transparent;
   cursor: default;
-  /* color: inherit; */ /* ! makes text color black */
+  /* color: inherit; */
+  /* ! makes text color black, not apply active/wrong btn color*/
+}
+.btn:disabled:not(.active):not(.wrong) {
+  opacity: 0.7;
 }
 
-.active {
+.btn.active {
   background-color: rgb(94, 94, 231);
   color: white;
   cursor: default;
@@ -24,8 +28,3 @@
   color: rgb(236, 24, 24);
   cursor: default;
 }
-
-/* .active:hover, */
-/* .wrong:hover { */
-/* border-color: transparent; */
-/* } */
