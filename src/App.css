@@ -78,6 +78,7 @@
 
 /* Version one - gradient border rotate */
 .version--one {
+  transition: background-color 250ms ease;
 }
 
 .game-result__btn--border {
@@ -141,6 +142,7 @@
   position: relative;
   color: white;
   animation: float 2.5s ease-in-out infinite; /* zooms in out / float */
+  transition: filter 250ms ease;
 }
 
 .game-result .version--two:before {
@@ -191,7 +193,13 @@
   border-color: transparent;
   /* border: none; */
 }
-
+.game-result .version--one:hover {
+  background-color: rgb(39, 39, 39);
+}
+.game-result .version--two:hover {
+  /* background-color: rgb(39, 39, 39); */
+  filter: brightness(1.1);
+}
 .game-result button:focus-visible {
   outline-offset: 4px;
 }
