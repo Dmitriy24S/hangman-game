@@ -12,7 +12,7 @@ interface Props {
 const ThemeToggle = ({ darkTheme, handleToggleTheme }: Props) => {
   return (
     <button className={styles.toggle} onClick={handleToggleTheme}>
-      {darkTheme === 'true' ? <img src={moonSvg} alt='moon' /> : <img src={sunSvg} alt='moon' />}
+      {darkTheme === 'true' ? <img src={moonSvg} className={styles.moon} alt='moon (dark mode)' /> : <img src={sunSvg} alt='sun (light mode)' />}
     </button>
   )
 }
